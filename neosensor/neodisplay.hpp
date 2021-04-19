@@ -22,6 +22,7 @@ public:
 
 private:
 	boolean connected = false;
+	void init(const u8g2_cb_t *, uint8_t, uint8_t, uint8_t);
 };
 // #ifdef __cplusplus
 // }

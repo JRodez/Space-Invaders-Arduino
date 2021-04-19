@@ -2,7 +2,7 @@
 #include <U8g2lib.h>
 #include <HardwareSerial.h>
 #include "sprites/sprites.h"
-#include "neodisplay/neodisplay.hpp"
+#include "neodisplay.hpp"
 #include "neocampus_i2c.h"
 #include <Wire.h>
 #define SDA 21
@@ -31,8 +31,11 @@ void setup()
 
 	neodisp.clearBuffer();				 // on efface ce qui se trouve déjà dans le buffer
 	neodisp.setFont(u8g2_font_7x13B_tf); // choix d'une police de caractère
-	neodisp.setCursor(25, 40);
-	neodisp.print("Hello World  !");
+	neodisp.setCursor(10, 10);
+	neodisp.print("Hello World!");
+	neodisp.setCursor(10, 40);
+	neodisp.print(random(0, 100));
+
 	neodisp.sendBuffer();
 	// delay(5000);
 }

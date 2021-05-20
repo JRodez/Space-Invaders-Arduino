@@ -20,11 +20,12 @@ void setup()
 
 	Serial.println("Début :");
 
-	disp.setCursor(10, 10);
+	disp.setCursor(25, 30);
 	disp.print("Hello World!");
 	disp.sendBuffer();
 
 	delay(5000);
+	disp.clearDisplay();
 }
 
 void loop()

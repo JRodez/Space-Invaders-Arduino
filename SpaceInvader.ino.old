@@ -15,6 +15,7 @@
 #define DISP_WIDTH 128
 #define DISP_HEIGHT 64
 
+#define PULL_MODE HIGH
 #define FIRE_BUTTON 2
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 4
@@ -62,28 +63,6 @@ void AttractScreen()
 
 	ColPosition = display.getStrWidth("8");
 
-	if (HiScore < 10)
-	{
-		ColPosition = int((DISP_WIDTH - display.getStrWidth("Hi Score ") - ColPosition) / 2.0);
-	}
-	else if (HiScore < 100)
-	{
-		ColPosition = int((DISP_WIDTH - display.getStrWidth("Hi Score ") - ColPosition * 2) / 2.0);
-	}
-	else if (HiScore < 1000)
-	{
-		ColPosition = int((DISP_WIDTH - display.getStrWidth("Hi Score ") - ColPosition * 3) / 2.0);
-	}
-	else if (HiScore < 10000)
-	{
-		ColPosition = int((DISP_WIDTH - display.getStrWidth("Hi Score ") - ColPosition * 4) / 2.0);
-	}
-	else
-	{
-		ColPosition = int((DISP_WIDTH - display.getStrWidth("Hi Score ") - ColPosition * 5) / 2.0);
-		//65,535 max
-	}
-
 	display.clearBuffer();
 	RowHeight = FONT_Ascent + (DISP_HEIGHT - 4 * (FONT_Ascent + FONT_Descent + 1)) / 2;
 	CenterText("Play", RowHeight);
@@ -97,8 +76,7 @@ void AttractScreen()
 	RowHeight = RowHeight + FONT_Ascent + FONT_Descent + 1;
 	// Special Center Text ---->
 	display.setCursor(ColPosition, RowHeight);
-	display.print("Hi Score ");
-	display.print(HiScore);
+
 	//display.display();
 
 	if (digitalRead(LEFT_BUTTON) && digitalRead(RIGHT_BUTTON))
@@ -106,7 +84,6 @@ void AttractScreen()
 		HiScore = 0;
 		EEPROM.put(0, HiScore);
 	}
-
 	display.sendBuffer();
 }
 void setup()
@@ -121,10 +98,9 @@ void setup()
 	pinMode(FIRE_BUTTON, OUTPUT);
 	pinMode(LEFT_BUTTON, OUTPUT);
 	pinMode(RIGHT_BUTTON, OUTPUT);
-	// Buttons in pullup mode
-	digitalWrite(FIRE_BUTTON, HIGH);
-	digitalWrite(LEFT_BUTTON, HIGH);
-	digitalWrite(RIGHT_BUTTON, HIGH);
+	digitalWrite(FIRE_BUTTON, PULL_MODE);
+	digitalWrite(LEFT_BUTTON, PULL_MODE);
+	digitalWrite(RIGHT_BUTTON, PULL_MODE);
 
 	// create_button(&fire_button, 2, true);
 	// create_button(&left_button, 3, true);
@@ -143,5 +119,16 @@ void setup()
 }
 void loop()
 {
-	AttractScreen();
+	display.clearBuffer();
+	display.setFont(u8g2_font_7x13B_tf); // choix d'une police de caractère
+	display.setCursor(25, 40);
+	display.print("Hello World!");
+	display.sendBuffer();
+	delay(1000);
+
+	while (digitalRead(FIRE_BUTTON) == PULL_MODE)
+	{
+		AttractScreen();
+		delay(50);
+	}
 }

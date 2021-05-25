@@ -1,0 +1,8 @@
+#include <stdint.h>
+
+int a;
+float cvzfze;
+// extern "C++"
+// {
+
+// }

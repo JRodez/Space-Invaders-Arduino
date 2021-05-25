@@ -6,7 +6,7 @@ typedef enum
 	ACTIVE = 0,
 	EXPLODING = 1,
 	DESTROYED = 2
-} ObjectStatus;
+} ObjectStatus; 
 
 struct GameObject
 {

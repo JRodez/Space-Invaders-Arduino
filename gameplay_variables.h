@@ -16,7 +16,7 @@
 #define INVADERS_SPEED 30  // speed of movement, lower=faster.
 #define INVADER_HEIGHT 8
 #define EXPLOSION_XBM_TIME 7 // How long an ExplosionXBM remains on screen before dissapearing
-#define INVADERS_Y_START MotherShipXBM.Y() - 1
+#define INVADERS_Y_START MotherShipXBM.Y() - 1 
 #define AMOUNT_TO_DROP_BY_PER_LEVEL 4	 //NEW How much farther down aliens start per new level
 #define LEVEL_TO_RESET_TO_START_HEIGHT 4 // EVERY MULTIPLE OF THIS LEVEL THE ALIEN y START POSITION WILL RESET TO TOP
 #define ALIEN_X_MOVE_AMOUNT 1			 //number of pixels moved at start of wave

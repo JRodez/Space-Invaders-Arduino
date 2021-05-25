@@ -103,7 +103,7 @@ void setup()
 	digitalWrite(RIGHT_BUTTON, PULL_MODE);
 
 	// create_button(&fire_button, 2, true);
-	// create_button(&left_button, 3, true);
+	// create_button(&left_button, 3, true); 
 	// create_button(&right_button, 4, true);
 
 	display.setFont(u8g2_font_t0_11b_tf); //font size is ok - it is loaded in PROGMEM

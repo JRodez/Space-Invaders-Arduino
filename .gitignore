@@ -1,6 +1,6 @@
 .vscode/
 bin/
 
-*.old
+.old$
 .project
-*.txt
+.txt$

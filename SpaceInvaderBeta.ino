@@ -5,7 +5,7 @@
 #include "sprites.h"
 
 #include "gameplay_variables.h"
-#include "spaceinvaderStructs.h"
+#include "SpaceInvaderStructs.h"
 
 #define USE_EEPROM
 #ifdef USE_EEPROM

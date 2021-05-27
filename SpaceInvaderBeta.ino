@@ -11,7 +11,7 @@
 #ifdef USE_EEPROM
 #include <EEPROM.h>
 #endif
-#define PULL_UP true
+#define USE_PULL_UP true
 #define U8G2_CONSTRUCTOR U8G2_SH1106_128X64_NONAME_F_HW_I2C
 
 #define DISP_WIDTH 128
@@ -74,7 +74,7 @@ void setup()
 	Missile.Status = DESTROYED;
 
 	// Buttons init
-#if PULL_UP == 1
+#if USE_PULL_UP == true
 	pinMode(FIRE_BUTTON, INPUT_PULLUP);
 	pinMode(LEFT_BUTTON, INPUT_PULLUP);
 	pinMode(RIGHT_BUTTON, INPUT_PULLUP);
@@ -144,14 +144,14 @@ void AttractScreen()
 	display.print("Hi Score : ");
 	display.print(HiScore);
 
-	if ((digitalRead(LEFT_BUTTON) != PULL_UP) && (digitalRead(RIGHT_BUTTON) != PULL_UP))
+	if ((digitalRead(LEFT_BUTTON) != USE_PULL_UP) && (digitalRead(RIGHT_BUTTON) != USE_PULL_UP))
 	{
 		HiScore = 0;
 		EEPROM.update(0, HiScore);
 	}
 
 	display.sendBuffer();
-	if (digitalRead(FIRE_BUTTON) != PULL_UP)
+	if (digitalRead(FIRE_BUTTON) != USE_PULL_UP)
 	{
 		Playing = true;
 		NewGame();
@@ -235,11 +235,11 @@ void MotherShipPhysics()
 
 void PlayerControl()
 {
-	if ((digitalRead(RIGHT_BUTTON) != PULL_UP) && (Player.X + TANKXBM_WIDTH < DISP_WIDTH))
+	if ((digitalRead(RIGHT_BUTTON) != USE_PULL_UP) && (Player.X + TANKXBM_WIDTH < DISP_WIDTH))
 		Player.X += PLAYER_X_MOVE_AMOUNT;
-	if ((digitalRead(LEFT_BUTTON) != PULL_UP) && (Player.X > 0))
+	if ((digitalRead(LEFT_BUTTON) != USE_PULL_UP) && (Player.X > 0))
 		Player.X -= PLAYER_X_MOVE_AMOUNT;
-	if ((digitalRead(FIRE_BUTTON) != PULL_UP) && (Missile.Status != ACTIVE))
+	if ((digitalRead(FIRE_BUTTON) != USE_PULL_UP) && (Missile.Status != ACTIVE))
 	{
 		Missile.X = Player.X + (TANKXBM_WIDTH / 2);
 		Missile.Y = PLAYER_Y_START;
@@ -773,7 +773,6 @@ void InitPlayer()
 }
 
 void NextLevel()
-
 {
 	int YStart;
 	for (int i = 0; i < MAXBOMBS; i++)

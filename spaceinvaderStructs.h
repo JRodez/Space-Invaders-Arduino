@@ -48,11 +48,18 @@ public:
 
 struct ExplosableObjectStruct : GameObjectStruct
 {
-	AlienObjectStruct(int16_t X, int16_t Y, ObjectStatus status) : GameObjectStruct(X, Y, status){};
-	AlienObjectStruct(int16_t X, int16_t Y) : GameObjectStruct(X, Y){}; // ACTIVE by default
-	AlienObjectStruct() : GameObjectStruct(){};							// (0,0) and ACTIVE by default
+	ExplosableObjectStruct(int16_t X, int16_t Y, ObjectStatus status) : GameObjectStruct(X, Y, status){};
+	ExplosableObjectStruct(int16_t X, int16_t Y) : GameObjectStruct(X, Y){}; // ACTIVE by default
+	ExplosableObjectStruct() : GameObjectStruct(){};						 // (0,0) and ACTIVE by default
 
 	uint8_t ExplosionXBMCounter = 0; // how long we want the ExplosionXBM to last
+};
+
+struct AlienObjectStruct : ExplosableObjectStruct
+{
+	AlienObjectStruct(int16_t X, int16_t Y, ObjectStatus status) : ExplosableObjectStruct(X, Y, status){};
+	AlienObjectStruct(int16_t X, int16_t Y) : ExplosableObjectStruct(X, Y){}; // ACTIVE by default
+	AlienObjectStruct() : ExplosableObjectStruct(){};						  // (0,0) and ACTIVE by default
 };
 
 struct PlayerObjectStruct : ExplosableObjectStruct
@@ -71,12 +78,13 @@ struct PlayerObjectStruct : ExplosableObjectStruct
 	uint16_t Score = 0;
 	uint8_t Lives = LIVES;
 	uint8_t Level = 0;
-	uint16_t AliensDestroyed = 0;	 // count of how many killed so far
-	uint8_t AlienSpeed = 0;			 // higher the number slower they go, calculated when ever alien destroyed
-	// uint8_t ExplosionXBMCounter = 0; // how long we want the ExplosionXBM to last
+	uint16_t AliensDestroyed = 0; // count of how many killed so far
+	uint8_t AlienSpeed = 0;		  // higher the number slower they go, calculated when ever alien destroyed
+								  // uint8_t ExplosionXBMCounter = 0; // how long we want the ExplosionXBM to last
 };
 
 typedef struct GameObjectStruct GameObject;
 typedef struct BaseObjectStruct BaseObject;
+typedef struct ExplosableObjectStruct ExplosableObject;
 typedef struct AlienObjectStruct AlienObject;
 typedef struct PlayerObjectStruct PlayerObject;

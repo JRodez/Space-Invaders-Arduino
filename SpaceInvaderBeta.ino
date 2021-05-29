@@ -7,19 +7,27 @@
 #include "gameplay_variables.h"
 #include "SpaceInvaderStructs.h"
 
+// #define ESP32
 #define USE_EEPROM
 #ifdef USE_EEPROM
 #include <EEPROM.h>
 #endif
-#define USE_PULL_UP true
-#define U8G2_CONSTRUCTOR U8G2_SH1106_128X64_NONAME_F_HW_I2C
 
+#define USE_PULL_UP false
+
+#define U8G2_CONSTRUCTOR U8G2_SH1106_128X64_NONAME_F_HW_I2C
 #define DISP_WIDTH 128
 #define DISP_HEIGHT 64
 
+#ifdef ESP32
+#define LEFT_BUTTON 15
+#define FIRE_BUTTON 18
+#define RIGHT_BUTTON 23
+#else
 #define FIRE_BUTTON 2
 #define LEFT_BUTTON 3
 #define RIGHT_BUTTON 4
+#endif
 
 U8G2_CONSTRUCTOR display(U8G2_R0, U8X8_PIN_NONE, SCL, SDA);
 

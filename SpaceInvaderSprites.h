@@ -54,7 +54,7 @@ public:
 	};
 
 	uint8_t *XBM() const
-	{ 
+	{
 		return this->xbmpicA;
 	};
 

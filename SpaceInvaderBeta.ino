@@ -2,9 +2,9 @@
 /*                      Libraries                           *
 /* ******************************************************** */
 #include <U8g2lib.h>
-#include "sprites.h"
 
 #include "gameplay_variables.h"
+#include "SpaceInvaderSprites.h"
 #include "SpaceInvaderStructs.h"
 
 // #define ESP32
@@ -12,8 +12,6 @@
 #ifdef USE_EEPROM
 #include <EEPROM.h>
 #endif
-
-#define USE_PULL_UP false
 
 #define U8G2_CONSTRUCTOR U8G2_SH1106_128X64_NONAME_F_HW_I2C
 #define DISP_WIDTH 128
@@ -82,15 +80,10 @@ void setup()
 	Missile.Status = DESTROYED;
 
 	// Buttons init
-#if USE_PULL_UP == true
-	pinMode(FIRE_BUTTON, INPUT_PULLUP);
-	pinMode(LEFT_BUTTON, INPUT_PULLUP);
-	pinMode(RIGHT_BUTTON, INPUT_PULLUP);
-#else
+
 	pinMode(FIRE_BUTTON, INPUT);
 	pinMode(LEFT_BUTTON, INPUT);
 	pinMode(RIGHT_BUTTON, INPUT);
-#endif
 
 	display.setFont(u8g2_font_t0_11b_tf);
 	FONT_Ascent = display.getAscent();
@@ -152,14 +145,14 @@ void AttractScreen()
 	display.print("Hi Score : ");
 	display.print(HiScore);
 
-	if ((digitalRead(LEFT_BUTTON) != USE_PULL_UP) && (digitalRead(RIGHT_BUTTON) != USE_PULL_UP))
+	if ((digitalRead(LEFT_BUTTON)) && (digitalRead(RIGHT_BUTTON)))
 	{
 		HiScore = 0;
 		EEPROM.update(0, HiScore);
 	}
 
 	display.sendBuffer();
-	if (digitalRead(FIRE_BUTTON) != USE_PULL_UP)
+	if (digitalRead(FIRE_BUTTON))
 	{
 		Playing = true;
 		NewGame();
@@ -171,7 +164,7 @@ void Physics()
 	if (Player.Status == ACTIVE)
 	{
 		AlienControl();
-		MotherShipPhysics();
+		MotherShipControl();
 		PlayerControl();
 		MissileControl();
 		CheckCollisions();
@@ -193,7 +186,7 @@ uint8_t GetScoreForAlien(int RowNumber)
 	}
 }
 
-void MotherShipPhysics()
+void MotherShipControl()
 {
 	if (MotherShip.Status == ACTIVE)
 	{
@@ -243,11 +236,11 @@ void MotherShipPhysics()
 
 void PlayerControl()
 {
-	if ((digitalRead(RIGHT_BUTTON) != USE_PULL_UP) && (Player.X + TANKXBM_WIDTH < DISP_WIDTH))
+	if ((digitalRead(RIGHT_BUTTON)) && (Player.X + TANKXBM_WIDTH < DISP_WIDTH))
 		Player.X += PLAYER_X_MOVE_AMOUNT;
-	if ((digitalRead(LEFT_BUTTON) != USE_PULL_UP) && (Player.X > 0))
+	if ((digitalRead(LEFT_BUTTON)) && (Player.X > 0))
 		Player.X -= PLAYER_X_MOVE_AMOUNT;
-	if ((digitalRead(FIRE_BUTTON) != USE_PULL_UP) && (Missile.Status != ACTIVE))
+	if ((digitalRead(FIRE_BUTTON)) && (Missile.Status != ACTIVE))
 	{
 		Missile.X = Player.X + (TANKXBM_WIDTH / 2);
 		Missile.Y = PLAYER_Y_START;
@@ -527,9 +520,10 @@ int RightMostPos()
 
 int LeftMostPos()
 {
-	int Across = 0;
-	int Down;
-	int Smallest = DISP_WIDTH * 2;
+	uint8_t Across = 0;
+	uint8_t Down;
+	int16_t Smallest = DISP_WIDTH * 2;
+
 	while (Across < NUM_ALIEN_COLUMNS)
 	{
 		Down = 0;

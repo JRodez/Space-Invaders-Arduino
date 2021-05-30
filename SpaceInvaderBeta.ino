@@ -6,6 +6,7 @@
 #include "gameplay_variables.h"
 #include "SpaceInvaderSprites.h"
 #include "SpaceInvaderStructs.h"
+#include "logo.h"
 
 // #define ESP32
 #define USE_EEPROM
@@ -58,6 +59,21 @@ bool Playing = false;
 uint8_t FONT_Ascent;
 uint8_t FONT_Descent;
 
+void drawLogo(int i) {
+    display.drawXBMP(0, 0, logo_width, logo_height, frames[i]);
+    display.sendBuffer();
+    switch(i) {
+        case 0:
+            delay(500);
+            break;
+        case 9:
+            delay(300);
+            break;
+        default:
+            delay(100);
+    }
+}
+
 void setup()
 {
 	display.begin();
@@ -65,13 +81,12 @@ void setup()
 	display.enableUTF8Print();
 	display.clear();
 	display.clearBuffer();
-	display.setFont(u8g2_font_7x13B_tf); // choix d'une police de caractère
-	display.setCursor(25, 40);
-	CenterText("Hack my NeOSensor", 25);
-	CenterText("SpaceInvader", 50);
-	display.sendBuffer();
 
-	delay(4000);
+    for (int i = 0; i < nbFrame; ++i) {
+        drawLogo(i);
+    }
+
+	delay(500);
 
 	//reinit
 	display.setBitmapMode(1);
@@ -148,7 +163,7 @@ void AttractScreen()
 	if ((digitalRead(LEFT_BUTTON)) && (digitalRead(RIGHT_BUTTON)))
 	{
 		HiScore = 0;
-		EEPROM.update(0, HiScore);
+		EEPROM.put(0, HiScore);
 	}
 
 	display.sendBuffer();

@@ -4,8 +4,8 @@
 #include <U8g2lib.h>
 
 #include "gameplay_variables.h"
-#include "SpaceInvaderSprites.h"
-#include "SpaceInvaderStructs.h"
+#include "SpaceInvadersSprites.h"
+#include "SpaceInvadersStructs.h"
 #include "logo.h"
 
 // #define ESP32
@@ -59,21 +59,23 @@ bool Playing = false;
 uint8_t FONT_Ascent;
 uint8_t FONT_Descent;
 
-void drawLogo(int i) {
-    display.drawXBMP(0, 0, logo_width, logo_height, frames[i]);
-    display.sendBuffer();
-    switch(i) {
-        case 0:
-            delay(500);
-            break;
-        case 9:
-            delay(300);
-            break;
-        default:
-            delay(100);
-    }
+void drawLogo(int i)
+{
+	display.clearBuffer();
+	display.drawXBMP(0, 0, logo_width, logo_height, frames[i]);
+	display.sendBuffer();
+	switch (i)
+	{
+	case 0:
+		delay(1000);
+		break;
+	case 9:
+		delay(300);
+		break;
+	default:
+		delay(100);
+	}
 }
-
 void setup()
 {
 	display.begin();
@@ -82,9 +84,10 @@ void setup()
 	display.clear();
 	display.clearBuffer();
 
-    for (int i = 0; i < nbFrame; ++i) {
-        drawLogo(i);
-    }
+	for (int i = 0; i < nbFrame; ++i)
+	{
+		drawLogo(i);
+	}
 
 	delay(500);
 
@@ -755,6 +758,12 @@ void GameOver()
 		EEPROM.put(0, HiScore);
 	}
 	delay(3000);
+	display.clear();
+	display.clearBuffer();
+	for (int i = 0; i < nbFrame; ++i)
+	{
+		drawLogo(i);
+	}
 }
 
 void DisplayPlayerAndLives()

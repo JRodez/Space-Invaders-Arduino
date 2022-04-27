@@ -1,5 +1,5 @@
 #include <U8g2lib.h>
-
+#include <stdint.h>
 #define logo_width 128
 #define logo_height 64
 #define nbFrame 14
@@ -1324,5 +1324,6 @@ static const uint8_t frame14[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
   0x00, 0x00, 0x00, 0x00, };
 
-static const uint8_t* frames[] = {frame0, frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8,
-                         frame9, frame10, frame11, frame12, frame13, frame14};
+static const uint8_t *frames[] = {frame0, frame1, frame2, frame3, frame4, frame5, frame6, frame7, frame8,
+								  frame9, frame10, frame11, frame12, frame13, frame14};
+
